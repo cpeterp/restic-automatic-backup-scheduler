@@ -47,9 +47,6 @@ assert_envvars\
 warn_on_missing_envvars \
 	B2_ACCOUNT_ID B2_ACCOUNT_KEY B2_CONNECTIONS
 
-B2_ARG=
-[ -z "${B2_CONNECTIONS+x}" ] || B2_ARG=(--option b2.connections="$B2_CONNECTIONS")
-
 # Remove locks from other stale processes to keep the automated backup running.
 # NOTE nope, don't unlock like restic_backup.sh. restic_backup.sh should take precedence over this script.
 #restic unlock &
@@ -57,6 +54,5 @@ B2_ARG=
 
 # Check repository for errors.
 restic check \
-	"${B2_ARG[@]}" \
 	--verbose="$RESTIC_VERBOSITY_LEVEL" &
 wait $!

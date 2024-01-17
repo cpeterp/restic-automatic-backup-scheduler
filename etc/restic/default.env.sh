@@ -16,7 +16,7 @@
 
 # Envvars below will override those in _global.env.sh if present.
 
-export RESTIC_REPOSITORY="b2:<b2-repo-name>"   # *EDIT* fill with your repo name
+export RESTIC_REPOSITORY="s2:<s2-repo-name>"   # *EDIT* fill with your repo name
 
 # What to backup. Colon-separated paths e.g. to different mountpoints "/home:/mnt/usb_disk".
 # To backup only your home directory, set "/home/your-user"

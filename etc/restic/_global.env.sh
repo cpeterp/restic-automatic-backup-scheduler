@@ -16,11 +16,9 @@ export RESTIC_BACKUP_EXCLUDE_FILE="{{ INSTALL_PREFIX }}/etc/restic/backup_exclud
 
 # Backblaze B2 credentials keyID & applicationKey pair.
 # Restic environment variables are documented at https://restic.readthedocs.io/en/latest/040_backup.html#environment-variables
-export B2_ACCOUNT_ID="<b2-key-id>"   # *EDIT* fill with your keyID
-export B2_ACCOUNT_KEY="<b2-application-key>" # *EDIT* fill with your applicationKey
-
-# How many network connections to set up to B2. Default is 5.
-export B2_CONNECTIONS=10
+# B2 is no longer reccomended, using S3 instead
+export AWS_ACCESS_KEY_ID="<b2-key-id>"   # *EDIT* fill with your keyID
+export AWS_SECRET_ACCESS_KEY="<b2-application-key>" # *EDIT* fill with your applicationKey
 
 # Optional extra space-separated args to restic-backup.
 # This is empty here and profiles can override this after sourcing this file.

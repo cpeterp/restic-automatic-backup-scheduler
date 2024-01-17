@@ -79,7 +79,7 @@ assert_envvars \
 	RESTIC_RETENTION_HOURS RESTIC_RETENTION_DAYS RESTIC_RETENTION_MONTHS RESTIC_RETENTION_WEEKS RESTIC_RETENTION_YEARS
 
 warn_on_missing_envvars \
-	B2_ACCOUNT_ID B2_ACCOUNT_KEY B2_CONNECTIONS \
+	AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY \
 	RESTIC_PASSWORD_FILE
 
 # Convert to arrays, as arrays should be used to build command lines. See https://github.com/koalaman/shellcheck/wiki/SC2086
@@ -92,9 +92,6 @@ if [ -n "$RESTIC_BACKUP_EXTRA_ARGS" ]; then
 	backup_extra_args+=( "$REPLY" )
 	done < <(xargs printf '%s\0' <<<"$RESTIC_BACKUP_EXTRA_ARGS")
 fi
-
-B2_ARG=
-[ -z "${B2_CONNECTIONS+x}" ] || B2_ARG=(--option b2.connections="$B2_CONNECTIONS")
 
 # If you need to run some commands before performing the backup; create this file, put them there and make the file executable.
 PRE_SCRIPT="{{ INSTALL_PREFIX }}/etc/restic/pre_backup.sh"
@@ -133,7 +130,6 @@ restic backup \
 	--verbose="$RESTIC_VERBOSITY_LEVEL" \
 	$FS_ARG \
 	--tag "$RESTIC_BACKUP_TAG" \
-	"${B2_ARG[@]}" \
 	"${exclusion_args[@]}" \
 	"${backup_extra_args[@]}" \
 	"${backup_paths[@]}" &
@@ -145,7 +141,6 @@ wait $!
 restic forget \
 	--verbose="$RESTIC_VERBOSITY_LEVEL" \
 	--tag "$RESTIC_BACKUP_TAG" \
-	"${B2_ARG[@]}" \
 	--prune \
 	--group-by "paths,tags" \
 	--keep-hourly "$RESTIC_RETENTION_HOURS" \
